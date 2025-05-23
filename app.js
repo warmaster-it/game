@@ -3,13 +3,24 @@ let coinsBalance = parseFloat(localStorage.getItem('coins')) || 1000.0;
 let inBoost = false;
 let meter = 0;
 let lastTapTime = 0;
-let tradeInterval = null;
+let tradeInterval;
 let boostStartCoins = 0;
-let periodStats = {
+const now = new Date();
+const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+
+const stored = JSON.parse(localStorage.getItem('periodStats')) || {};
+periodStats = {
   session: { start: coinsBalance },
-  today: { start: coinsBalance },
-  month: { start: coinsBalance }
+  today: { start: stored.today?.timestamp === midnight ? stored.today.start : coinsBalance },
+  month: { start: stored.month?.timestamp === monthStart ? stored.month.start : coinsBalance }
 };
+
+localStorage.setItem('periodStats', JSON.stringify({
+  today: { start: periodStats.today.start, timestamp: midnight },
+  month: { start: periodStats.month.start, timestamp: monthStart }
+}));
+
 let soundOn = true;
 
 // === Utility Functions ===
@@ -58,11 +69,12 @@ function updateUI(pct) {
   document.getElementById('timeDisplay').textContent = `as of ${new Date().toLocaleTimeString()}`;
 
   const tab = document.querySelector('.tab.active').dataset.period;
-  const start = periodStats[tab].start;
+  const start = periodStats[tab].start || coinsBalance; // fallback
   const deltaC = coinsBalance - start;
-  const deltaP = ((deltaC / start) * 100).toFixed(2);
+  const deltaP = ((deltaC / start) * 100).toFixed(1);
+  const sign = deltaC >= 0 ? '+' : '–';
   document.getElementById('deltaDisplay').textContent =
-    `${deltaC >= 0 ? '+' : '–'}${Math.abs(deltaP)} % (${deltaC >= 0 ? '+' : '–'}${Math.abs(deltaC).toFixed(1)} C)`;
+  `Return ${tab.charAt(0).toUpperCase() + tab.slice(1)}: ${sign}${Math.abs(deltaP)} % (${sign}${Math.abs(deltaC).toFixed(1)} C)`;
 }
 
 // === Tap & Boost Logic ===
