@@ -197,3 +197,9 @@ setInterval(() => {
 
 // === Initial Load ===
 updateUI(0);
+setTimeout(() => {
+  const pct = safeStrategyTradeReturn();
+  coinsBalance *= (1 + pct);
+  localStorage.setItem('coins', coinsBalance.toFixed(2));
+  updateUI(pct);
+}, 3000);
