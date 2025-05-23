@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Coin Bot Simulator</title>
+  <link href="style.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Coin Bot Simulator</h1>
+      <div class="stats">
+        <div id="coinDisplay">Coins: 1000.0 C</div>
+        <div id="timeDisplay">as of --:--:--</div>
+        <div class="tabs">
+          <button class="tab active" data-period="session">Session</button>
+          <button class="tab" data-period="today">Today</button>
+          <button class="tab" data-period="month">Month</button>
+        </div>
+        <div id="deltaDisplay">+0.0 % (+0.0 C)</div>
+      </div>
+    </header>
+
+    <main>
+      <img id="botFace" src="assets/bot-neutral.png" alt="Bot Assistant" />
+      <button id="tapButton">POWER UP BOT</button>
+      <button id="paidBoost">⚡ 30 s Paid Boost</button>
+      <div id="meterContainer"><div id="meterBar"></div></div>
+      <div id="pulseMsg"></div>
+    </main>
+
+    <footer>
+      <button id="soundToggle">🔊</button>
+    </footer>
+  </div>
+
+  <div id="summaryModal" class="modal hidden">
+    <div class="modalContent">
+      <p id="summaryText"></p>
+      <button id="closeModal">Close</button>
+    </div>
+  </div>
+
+  <audio id="clickSound" src="assets/click.mp3"></audio>
+  <audio id="winSound" src="assets/win.mp3"></audio>
+
+  <script src="app.js"></script>
+</body>
+</html>
