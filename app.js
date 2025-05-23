@@ -31,7 +31,7 @@ function randNormal(mean, stdDev) {
 }
 
 function safeStrategyTradeReturn() {
-  return Math.random() < 0.86 ? randNormal(0.0038, 0.0007) : randNormal(-0.0020, 0.0005);
+  return Math.random() < 0.86 ? randNormal(0.0030, 0.0007) : randNormal(-0.0020, 0.0005);
 }
 
 function riskyStrategyTradeReturn() {
