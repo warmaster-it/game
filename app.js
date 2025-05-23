@@ -134,6 +134,12 @@ function activatePaidBoost() {
 // === UI Events ===
 document.getElementById('tapButton').onclick = () => {
   meter = Math.min(100, meter + 10);
+  if (soundOn) {
+  const clickSound = document.getElementById('clickSound');
+  clickSound.currentTime = 0;
+  clickSound.play();
+}
+
   lastTapTime = Date.now();
   document.getElementById('meterBar').style.width = `${meter}%`;
   if (meter === 100 && !inBoost) startBoost();
