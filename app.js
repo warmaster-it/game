@@ -88,6 +88,11 @@ function startBoost() {
   clearInterval(tradeInterval);
   tradeInterval = setInterval(runTrade, 5000);
   document.getElementById('botAuraWrapper').classList.add('boost');
+  if (soundOn) {
+  const boostStartSound = document.getElementById('boostStartSound');
+  boostStartSound.currentTime = 0;
+  boostStartSound.play();
+}
 }
 
 function stopBoost() {
@@ -102,6 +107,11 @@ function stopBoost() {
     : `Boost Result: –${Math.abs(pct)} % (–${Math.abs(diff).toFixed(1)} C). Risky ride!`;
   document.getElementById('summaryText').textContent = text;
   document.getElementById('summaryModal').classList.remove('hidden');
+  if (soundOn) {
+  const boostEndSound = document.getElementById('boostEndSound');
+  boostEndSound.currentTime = 0;
+  boostEndSound.play();
+}
 }
 
 function activatePaidBoost() {
@@ -129,6 +139,11 @@ function activatePaidBoost() {
       stopBoost(); // Show summary and end
     }
   }, 100); // Check 10x/sec
+  if (soundOn) {
+  const boostStartSound = document.getElementById('boostStartSound');
+  boostStartSound.currentTime = 0;
+  boostStartSound.play();
+}
 }
 
 // === UI Events ===
