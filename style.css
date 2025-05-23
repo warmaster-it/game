@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   font-size: 16px;
@@ -16,7 +20,6 @@ body {
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
-  box-sizing: border-box;
 }
 
 header h1 {
@@ -44,13 +47,75 @@ header h1 {
   color: white;
 }
 
-main img {
-  width: 160px;
-  max-width: 80%;
-  height: auto;
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main > button,
+main > #meterContainer,
+main > #pulseMsg,
+main > .pulse-gear {
+  width: 100%;
+  max-width: 320px;
+  margin: 0.5rem auto;
+  text-align: center;
+}
+
+/* === BOT AURA + IMAGE === */
+#botAuraWrapper {
+  position: relative;
+  width: 280px; /* match aura size */
+  height: 280px;
   margin: 1rem auto;
 }
 
+.auraLayer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 280px;
+  height: 280px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(76, 175, 80, 0.35) 0%, rgba(76, 175, 80, 0) 80%);
+  animation: pulseAura 1.5s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+  display: none;
+}
+
+#botAuraWrapper.boost .auraLayer {
+  display: block;
+}
+
+#botWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 240px;
+  height: 240px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  overflow: visible;
+}
+
+#botWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 3;
+}
+
+@keyframes pulseAura {
+  0%   { transform: translate(-50%, -50%) scale(0.9); opacity: 0.4; }
+  50%  { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.4; }
+}
+
+/* === Buttons === */
 button {
   font-size: 1rem;
   margin: 0.5rem auto;
@@ -65,27 +130,12 @@ button {
   cursor: pointer;
 }
 
-.pulse-gear {
-  font-size: 1.2rem;
-  color: #aaa;
-  margin-top: 0.3rem;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  animation: pulseFlash 2s infinite;
-}
-
-@keyframes pulseFlash {
-  0% { opacity: 0; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.2); }
-  100% { opacity: 0; transform: scale(0.9); }
-}
-
-
 #paidBoost {
   background: #ffc107;
   color: #333;
 }
 
+/* === Meter === */
 #meterContainer {
   margin: 1rem auto;
   width: 90%;
@@ -103,16 +153,30 @@ button {
   transition: width 0.1s linear;
 }
 
+/* === Trade Message === */
 #pulseMsg {
-  margin-top: 0.5rem;
   font-weight: bold;
   font-size: 1rem;
   min-height: 1.4rem;
   transition: transform 0.2s;
 }
 
+.pulse-gear {
+  font-size: 1.2rem;
+  color: #aaa;
+  opacity: 0;
+  animation: pulseFlash 2s infinite;
+  width: 100%;
+  text-align: center;
+}
 
+@keyframes pulseFlash {
+  0%   { opacity: 0; transform: scale(1); }
+  50%  { opacity: 1; transform: scale(1.4); }
+  100% { opacity: 0; transform: scale(1); }
+}
 
+/* === Footer === */
 footer {
   margin-top: 1rem;
 }
@@ -123,6 +187,7 @@ footer button {
   border: none;
 }
 
+/* === Modal === */
 .modal {
   position: fixed;
   top: 0;

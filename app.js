@@ -49,19 +49,19 @@ function runTrade() {
 function updateUI(pct) {
   const pulse = document.getElementById('pulseMsg');
   const bot = document.getElementById('botFace');
-  const isGain = pct > 0;
+  const isGain = pct > 0; // define BEFORE using!
+
+  // Update bot face
+  bot.src = inBoost
+    ? (isGain ? 'assets/bot-excited.png' : 'assets/bot-neutral.png')
+    : (isGain ? 'assets/bot-happy.png' : 'assets/bot-neutral.png');
+
   const delta = (coinsBalance * pct).toFixed(1);
   const pctDisplay = (pct * 100).toFixed(2);
   pulse.textContent = `${isGain ? '+' : '–'}${pctDisplay} % (${isGain ? '+' : '–'}${Math.abs(delta)} C)`;
   pulse.className = isGain ? 'green' : 'gray';
   pulse.style.transform = 'scale(1.2)';
   setTimeout(() => pulse.style.transform = 'scale(1)', 200);
-
-  if (inBoost) {
-  bot.src = isGain ? 'assets/bot-excited.png' : 'assets/bot-neutral.png';
-} else {
-  bot.src = isGain ? 'assets/bot-happy.png' : 'assets/bot-neutral.png';
-}
 
   if (soundOn) {
     if (isGain) document.getElementById('winSound').play();
@@ -72,13 +72,14 @@ function updateUI(pct) {
   document.getElementById('timeDisplay').textContent = `as of ${new Date().toLocaleTimeString()}`;
 
   const tab = document.querySelector('.tab.active').dataset.period;
-  const start = periodStats[tab].start || coinsBalance; // fallback
+  const start = periodStats[tab].start || coinsBalance;
   const deltaC = coinsBalance - start;
   const deltaP = ((deltaC / start) * 100).toFixed(1);
   const sign = deltaC >= 0 ? '+' : '–';
   document.getElementById('deltaDisplay').textContent =
-  `Return ${tab.charAt(0).toUpperCase() + tab.slice(1)}: ${sign}${Math.abs(deltaP)} % (${sign}${Math.abs(deltaC).toFixed(1)} C)`;
+    `Return ${tab.charAt(0).toUpperCase() + tab.slice(1)}: ${sign}${Math.abs(deltaP)} % (${sign}${Math.abs(deltaC).toFixed(1)} C)`;
 }
+
 
 // === Tap & Boost Logic ===
 function startBoost() {
@@ -86,13 +87,14 @@ function startBoost() {
   boostStartCoins = coinsBalance;
   clearInterval(tradeInterval);
   tradeInterval = setInterval(runTrade, 5000);
+  document.getElementById('botAuraWrapper').classList.add('boost');
 }
 
 function stopBoost() {
   inBoost = false;
   clearInterval(tradeInterval);
   tradeInterval = setInterval(runTrade, 20000);
-
+  document.getElementById('botAuraWrapper').classList.remove('boost');
   const diff = coinsBalance - boostStartCoins;
   const pct = ((diff / boostStartCoins) * 100).toFixed(1);
   const text = diff >= 0
@@ -103,6 +105,7 @@ function stopBoost() {
 }
 
 function activatePaidBoost() {
+  document.getElementById('botAuraWrapper').classList.add('boost');
   meter = 100;
   document.getElementById('meterBar').style.width = '100%';
   inBoost = true;
