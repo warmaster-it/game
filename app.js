@@ -57,8 +57,11 @@ function updateUI(pct) {
   pulse.style.transform = 'scale(1.2)';
   setTimeout(() => pulse.style.transform = 'scale(1)', 200);
 
-  if (inBoost) bot.src = 'assets/bot-excited.png';
-  else bot.src = isGain ? 'assets/bot-happy.png' : 'assets/bot-neutral.png';
+  if (inBoost) {
+  bot.src = isGain ? 'assets/bot-excited.png' : 'assets/bot-neutral.png';
+} else {
+  bot.src = isGain ? 'assets/bot-happy.png' : 'assets/bot-neutral.png';
+}
 
   if (soundOn) {
     if (isGain) document.getElementById('winSound').play();
