@@ -90,12 +90,27 @@ function stopBoost() {
 function activatePaidBoost() {
   meter = 100;
   document.getElementById('meterBar').style.width = '100%';
-  startBoost();
-  setTimeout(() => {
-    meter = 0;
-    stopBoost();
-    document.getElementById('meterBar').style.width = '0%';
-  }, 30000);
+  inBoost = true;
+  boostStartCoins = coinsBalance;
+
+  clearInterval(tradeInterval);
+  tradeInterval = setInterval(runTrade, 5000);
+
+  const boostEndTime = Date.now() + 30000;
+
+  // Start a temp lock that overrides meter decay
+  const paidBoostTimer = setInterval(() => {
+    const now = Date.now();
+    if (now < boostEndTime) {
+      meter = 100;
+      document.getElementById('meterBar').style.width = '100%';
+    } else {
+      clearInterval(paidBoostTimer);
+      meter = 0;
+      document.getElementById('meterBar').style.width = '0%';
+      stopBoost(); // Show summary and end
+    }
+  }, 100); // Check 10x/sec
 }
 
 // === UI Events ===
