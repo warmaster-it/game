@@ -196,7 +196,9 @@ setInterval(() => {
 }, 100);
 
 // === Initial Load ===
+soundOn = false;
 updateUI(0);
+soundOn = true;
 setTimeout(() => {
   const pct = safeStrategyTradeReturn();
   coinsBalance *= (1 + pct);
