@@ -157,13 +157,13 @@ setInterval(() => {
   const now = Date.now();
   if (inBoost) {
     const dt = now - lastTapTime;
-    if (dt > 300) meter -= 2;
+    if (dt > 300) meter -= 5;
     if (meter <= 0) {
       meter = 0;
       stopBoost();
     }
   } else {
-    meter = Math.max(0, meter - 0.1);
+    meter = Math.max(0, meter - 3);
   }
   document.getElementById('meterBar').style.width = `${Math.max(0, Math.min(100, meter))}%`;
 }, 100);
