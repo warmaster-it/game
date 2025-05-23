@@ -65,6 +65,22 @@ button {
   cursor: pointer;
 }
 
+.pulse-gear {
+  font-size: 1.2rem;
+  color: #aaa;
+  margin-top: 0.3rem;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  animation: pulseFlash 2s infinite;
+}
+
+@keyframes pulseFlash {
+  0% { opacity: 0; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0; transform: scale(0.9); }
+}
+
+
 #paidBoost {
   background: #ffc107;
   color: #333;
@@ -94,6 +110,8 @@ button {
   min-height: 1.4rem;
   transition: transform 0.2s;
 }
+
+
 
 footer {
   margin-top: 1rem;
