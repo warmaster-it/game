@@ -105,6 +105,8 @@ function stopBoost() {
   clearInterval(tradeInterval);
   tradeInterval = setInterval(runTrade, 20000);
   document.getElementById('botAuraWrapper').classList.remove('boost');
+  startCooldown();
+
   const diff = coinsBalance - boostStartCoins;
   const pct = ((diff / boostStartCoins) * 100).toFixed(1);
   const text = diff >= 0
@@ -118,6 +120,26 @@ function stopBoost() {
   boostEndSound.play();
 }
 }
+
+function startCooldown() {
+  const button = document.getElementById('tapButton');
+  let remaining = 15;
+
+  button.disabled = true;
+  button.textContent = `Cooldown: ${remaining}s`;
+
+  const cooldownTimer = setInterval(() => {
+    remaining--;
+    if (remaining > 0) {
+      button.textContent = `Cooldown: ${remaining}s`;
+    } else {
+      clearInterval(cooldownTimer);
+      button.disabled = false;
+      button.textContent = 'POWER UP BOT';
+    }
+  }, 1000);
+}
+
 
 function activatePaidBoost() {
     // Block if user can't afford boost
