@@ -8,6 +8,7 @@ let boostStartCoins = 0;
 const now = new Date();
 const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
 const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+const fee = 0.0030;  // 0.30% exchange fee
 
 const stored = JSON.parse(localStorage.getItem('periodStats')) || {};
 periodStats = {
@@ -39,8 +40,12 @@ function riskyStrategyTradeReturn() {
 }
 
 // === Trade Engine ===
+function netReturnWithFee(rawReturn) {
+  return rawReturn - fee;
+}
+
 function runTrade() {
-  const pct = inBoost ? riskyStrategyTradeReturn() : safeStrategyTradeReturn();
+  const pct = inBoost ? netReturnWithFee(riskyStrategyTradeReturn()) : netReturnWithFee(safeStrategyTradeReturn());
   coinsBalance *= (1 + pct);
   localStorage.setItem('coins', coinsBalance.toFixed(2));
   updateUI(pct);
