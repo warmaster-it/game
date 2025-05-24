@@ -75,11 +75,11 @@ main > .pulse-gear {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 280px;
-  height: 280px;
+  width: 320px;
+  height: 320px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(76, 175, 80, 0.35) 0%, rgba(76, 175, 80, 0) 80%);
+  background: radial-gradient(circle, rgba(76, 175, 80, 0.8) 0%, rgba(76, 175, 80, 0) 70%);
   animation: pulseAura 1.5s ease-in-out infinite;
   z-index: 0;
   pointer-events: none;
@@ -110,9 +110,9 @@ main > .pulse-gear {
 }
 
 @keyframes pulseAura {
-  0%   { transform: translate(-50%, -50%) scale(0.9); opacity: 0.4; }
-  50%  { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-  100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.4; }
+  0%   { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+  50%  { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
 }
 
 /* === Buttons === */
