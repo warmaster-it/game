@@ -8,8 +8,8 @@ let boostStartCoins = 0;
 const now = new Date();
 const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
 const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
-const fee = 0.0030;  // 0.30% exchange fee
-
+let fee = 0.0030;  // 0.30% exchange fee
+let paidBoostCost = 10; //10 coins for now, maybe use percentages later
 const stored = JSON.parse(localStorage.getItem('periodStats')) || {};
 periodStats = {
   session: { start: coinsBalance },
@@ -120,6 +120,17 @@ function stopBoost() {
 }
 
 function activatePaidBoost() {
+    // Block if user can't afford boost
+  if (coinsBalance < paidBoostCost) {
+    alert("Not enough coins for Paid Boost!");
+    return;
+  }
+
+  // Deduct coins
+  coinsBalance -= paidBoostCost;
+  document.getElementById('coinDisplay').textContent = `Coins: ${coinsBalance.toFixed(1)} C`;
+
+  // Activate aura + boost mode
   document.getElementById('botAuraWrapper').classList.add('boost');
   meter = 100;
   document.getElementById('meterBar').style.width = '100%';
