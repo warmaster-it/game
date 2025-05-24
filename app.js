@@ -11,6 +11,7 @@ const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
 let feeRate = 0.0030;  // 0.30% exchange fee
 let totalFeesPaid = parseFloat(localStorage.getItem('feesPaid')) || 0;
 let paidBoostCost = 10; //10 coins for now, maybe use percentages later
+let isPaidBoost = false;
 const stored = JSON.parse(localStorage.getItem('periodStats')) || {};
 periodStats = {
   session: { start: coinsBalance },
@@ -94,6 +95,7 @@ function updateUI(pct) {
 
 // === Tap & Boost Logic ===
 function startBoost() {
+  isPaidBoost = false;
   inBoost = true;
   boostStartCoins = coinsBalance;
   clearInterval(tradeInterval);
@@ -111,7 +113,14 @@ function stopBoost() {
   clearInterval(tradeInterval);
   tradeInterval = setInterval(runTrade, 20000);
   document.getElementById('botAuraWrapper').classList.remove('boost');
+  if (!isPaidBoost) {
   startCooldown();
+} else {
+  // Reset tap button immediately after paid boost
+  const tapButton = document.getElementById('tapButton');
+  tapButton.disabled = false;
+  tapButton.textContent = 'POWER UP BOT';
+}
 
   const diff = coinsBalance - boostStartCoins;
   const pct = ((diff / boostStartCoins) * 100).toFixed(1);
@@ -120,6 +129,8 @@ function stopBoost() {
     : `Boost Result: –${Math.abs(pct)} % (–${Math.abs(diff).toFixed(1)} C). Risky ride!`;
   document.getElementById('summaryText').textContent = text;
   document.getElementById('summaryModal').classList.remove('hidden');
+  
+  
   if (soundOn) {
   const boostEndSound = document.getElementById('boostEndSound');
   boostEndSound.currentTime = 0;
@@ -128,20 +139,20 @@ function stopBoost() {
 }
 
 function startCooldown() {
-  const button = document.getElementById('tapButton');
+  const tapButton = document.getElementById('tapButton');
   let remaining = 15;
 
-  button.disabled = true;
-  button.textContent = `Cooldown: ${remaining}s`;
+  tapButton.disabled = true;
+  tapButton.textContent = `Cooldown: ${remaining}s`;
 
   const cooldownTimer = setInterval(() => {
     remaining--;
     if (remaining > 0) {
-      button.textContent = `Cooldown: ${remaining}s`;
+      tapButton.textContent = `Cooldown: ${remaining}s`;
     } else {
       clearInterval(cooldownTimer);
-      button.disabled = false;
-      button.textContent = 'POWER UP BOT';
+      tapButton.disabled = false;
+      tapButton.textContent = 'POWER UP BOT';
     }
   }, 1000);
 }
@@ -160,8 +171,12 @@ function activatePaidBoost() {
 
   // Activate aura + boost mode
   document.getElementById('botAuraWrapper').classList.add('boost');
+  const tapButton = document.getElementById('tapButton');
+  tapButton.disabled = true;
+  tapButton.textContent = 'Boost Active...';
   meter = 100;
   document.getElementById('meterBar').style.width = '100%';
+  isPaidBoost = true;
   inBoost = true;
   boostStartCoins = coinsBalance;
 
