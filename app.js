@@ -80,8 +80,8 @@ function updateUI(pct) {
   }
 
   document.getElementById('coinDisplay').textContent = `Coins: ${coinsBalance.toFixed(1)} C`;
-  document.getElementById('feesDisplay').textContent = `Fees: ${totalFeesPaid.toFixed(2)} C`;
-  document.getElementById('timeDisplay').textContent = `as of ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+  document.getElementById('feesDisplay').textContent = `Fees Paid: ${totalFeesPaid.toFixed(2)} C`;
+  document.getElementById('timeDisplay').textContent = `as of ${new Date().toLocaleTimeString()}`;
 
   const tab = document.querySelector('.tab.active').dataset.period;
   const start = periodStats[tab].start || coinsBalance;
