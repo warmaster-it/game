@@ -11,10 +11,13 @@
   <div class="container">
     <header>
       <h1>Coin Bot Simulator</h1>
+      <!--button id="soundToggle">🔊</button>-->
       <div class="stats">
-        <div id="coinDisplay">Coins: 1000.0 C</div>
-        <div id="feesDisplay">Fees Paid: 0.00 C</div>
-        <div id="timeDisplay">as of --:--:--</div>
+        <div class="topStats">
+          <div id="coinDisplay">Coins: 1000.0 C</div>
+          <div id="feesDisplay">Fees: 0.00 C</div>
+          <div id="timeDisplay">as of --:--</div>
+        </div>
         <div class="tabs">
           <button class="tab active" data-period="session">Session</button>
           <button class="tab" data-period="today">Today</button>
@@ -32,18 +35,15 @@
           <img id="botFace" src="assets/bot-neutral.png" alt="Bot Assistant" />
         </div>
       </div>
-
-      <button id="tapButton">POWER UP BOT</button>
-      <button id="paidBoost">⚡ 30 s Paid Boost (💰10)</button>
-
       <div id="meterContainer"><div id="meterBar"></div></div>
+      <button id="tapButton">POWER UP BOT</button>
+      <button id="paidBoost">⚡ 30 s Paid Boost (💰10)</button>      
       <div id="pulseMsg"></div>
       <div id="pulseIndicator" class="pulse-gear">⚙️</div>
     </main>
-
+    <!--
     <footer>
-      <button id="soundToggle">🔊</button>
-    </footer>
+    </footer>-->
   </div>
 
   <div id="summaryModal" class="modal hidden">
