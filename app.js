@@ -69,7 +69,7 @@ function updateUI(pct) {
 
   const delta = (coinsBalance * pct).toFixed(1);
   const pctDisplay = (pct * 100).toFixed(2);
-  pulse.textContent = `${isGain ? '+' : ''}${pctDisplay} % (${isGain ? '+' : '-'}${Math.abs(delta)} C)`;
+  pulse.textContent = `${isGain ? '+' : '-'}${Math.abs(delta)} C (${isGain ? '+' : ''}${pctDisplay}%)`;
   pulse.className = isGain ? 'green' : 'gray';
   pulse.style.transform = 'scale(1.2)';
   setTimeout(() => pulse.style.transform = 'scale(1)', 200);
@@ -90,7 +90,7 @@ function updateUI(pct) {
   const deltaP = ((deltaC / start) * 100).toFixed(1);
   const sign = deltaC >= 0 ? '+' : '-';
   document.getElementById('deltaDisplay').textContent =
-    `Return ${tab.charAt(0).toUpperCase() + tab.slice(1)}: ${sign}${Math.abs(deltaP)} % (${sign}${Math.abs(deltaC).toFixed(1)} C)`;
+    `Return ${tab.charAt(0).toUpperCase() + tab.slice(1)}: ${sign}${Math.abs(deltaC).toFixed(1)} C (${sign}${Math.abs(deltaP)}%)`
 }
 
 
@@ -129,8 +129,9 @@ function stopBoost() {
   const diff = coinsBalance - boostStartCoins;
   const pct = ((diff / boostStartCoins) * 100).toFixed(1);
   const text = diff >= 0
-    ? `Boost Result: +${pct} % (+${diff.toFixed(1)} C) 🎉`
-    : `Boost Result: –${Math.abs(pct)} % (–${Math.abs(diff).toFixed(1)} C). Risky ride!`;
+    ? `Boost Result: +${diff.toFixed(1)} C (+${pct}%) 🎉`
+    : `Boost Result: –${Math.abs(diff).toFixed(1)} C (–${Math.abs(pct)}%). Risky ride!`;
+
   document.getElementById('summaryText').textContent = text;
   document.getElementById('summaryModal').classList.remove('hidden');
   
