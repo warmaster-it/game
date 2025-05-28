@@ -102,6 +102,9 @@ function startBoost() {
   clearInterval(tradeInterval);
   tradeInterval = setInterval(runTrade, 5000);
   document.getElementById('botAuraWrapper').classList.add('boost');
+  const tapButton = document.getElementById('tapButton');
+  tapButton.textContent = '!KEEP TAPPING!';
+
   if (soundOn) {
   const boostStartSound = document.getElementById('boostStartSound');
   boostStartSound.currentTime = 0;
