@@ -69,7 +69,7 @@ function updateUI(pct) {
 
   const delta = (coinsBalance * pct).toFixed(1);
   const pctDisplay = (pct * 100).toFixed(2);
-  pulse.textContent = `${isGain ? '+' : '–'}${pctDisplay} % (${isGain ? '+' : '–'}${Math.abs(delta)} C)`;
+  pulse.textContent = `${isGain ? '+' : ''}${pctDisplay} % (${isGain ? '+' : '-'}${Math.abs(delta)} C)`;
   pulse.className = isGain ? 'green' : 'gray';
   pulse.style.transform = 'scale(1.2)';
   setTimeout(() => pulse.style.transform = 'scale(1)', 200);
@@ -80,14 +80,15 @@ function updateUI(pct) {
   }
 
   document.getElementById('coinDisplay').textContent = `Coins: ${coinsBalance.toFixed(1)} C`;
-  document.getElementById('feesDisplay').textContent = `Fees Paid: ${totalFeesPaid.toFixed(2)} C`;
-  document.getElementById('timeDisplay').textContent = `as of ${new Date().toLocaleTimeString()}`;
-
+  document.getElementById('feesDisplay').textContent = `Fees: ${totalFeesPaid.toFixed(2)} C`;
+  const now = new Date();
+  document.getElementById('timeDisplay').textContent =
+  `as of ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
   const tab = document.querySelector('.tab.active').dataset.period;
   const start = periodStats[tab].start || coinsBalance;
   const deltaC = coinsBalance - start;
   const deltaP = ((deltaC / start) * 100).toFixed(1);
-  const sign = deltaC >= 0 ? '+' : '–';
+  const sign = deltaC >= 0 ? '+' : '-';
   document.getElementById('deltaDisplay').textContent =
     `Return ${tab.charAt(0).toUpperCase() + tab.slice(1)}: ${sign}${Math.abs(deltaP)} % (${sign}${Math.abs(deltaC).toFixed(1)} C)`;
 }

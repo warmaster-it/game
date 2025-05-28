@@ -2,6 +2,12 @@
   box-sizing: border-box;
 }
 
+header {
+  margin-top: 0;
+  padding-top: 0;
+  position: relative;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   font-size: 16px;
@@ -22,19 +28,56 @@ body {
   min-height: 100vh;
 }
 
-header h1 {
-  margin-bottom: 0.5rem;
-  font-size: 1.5rem;
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 300px;     /* match other UI elements */
+  margin: 0 auto;       /* center container */
+  padding: 0;
 }
+
+.header-row h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  text-align: left;
+  flex-grow: 1;
+}
+
+#soundToggle {
+  font-size: 1.2rem;
+           
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.2rem;
+  width: 40px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+
+
 
 .stats {
   font-size: 0.9rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.topStats {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  flex-wrap: wrap;
+  max-width: 300px;
+  margin: 0 auto;     
 }
 
 .tabs button {
   margin: 0.2rem;
-  padding: 0.4rem 0.8rem;
+  padding: 0.4rem 0.4rem;
   font-size: 0.85rem;
   border: none;
   border-radius: 5px;
@@ -59,7 +102,7 @@ main > #pulseMsg,
 main > .pulse-gear {
   width: 100%;
   max-width: 320px;
-  margin: 0.5rem auto;
+  margin: 0.25rem auto;
   text-align: center;
 }
 
@@ -68,7 +111,7 @@ main > .pulse-gear {
   position: relative;
   width: 280px; /* match aura size */
   height: 280px;
-  margin: 1rem auto;
+  margin: 0rem auto;
 }
 
 .auraLayer {
@@ -84,6 +127,7 @@ main > .pulse-gear {
   z-index: 0;
   pointer-events: none;
   display: none;
+  margin: 0.25rem
 }
 
 #botAuraWrapper.boost .auraLayer {
@@ -162,21 +206,23 @@ button {
 }
 
 /* === Trade Message === */
-#pulseMsg {
+#tradeLine {
   font-weight: bold;
   font-size: 1rem;
   min-height: 1.4rem;
-  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.5rem
 }
 
 .pulse-gear {
   font-size: 1.2rem;
   color: #aaa;
-  opacity: 0;
-  animation: pulseFlash 2s infinite;
-  width: 100%;
-  text-align: center;
+  animation: pulseFlash 1.5s infinite;
 }
+
 
 @keyframes pulseFlash {
   0%   { opacity: 0; transform: scale(1); }
@@ -186,13 +232,14 @@ button {
 
 /* === Footer === */
 footer {
-  margin-top: 1rem;
+  margin: 0rem;
 }
 
 footer button {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   background: none;
   border: none;
+  margin: 0rem;
 }
 
 /* === Modal === */
